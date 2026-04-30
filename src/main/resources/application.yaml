@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: application/json
+
+spring:
+  application:
+    name: Modpack-Sharing-Service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/modpack_db
+    username: postgres
+    password: postgres # Asigură-te că e parola setată la instalare
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Setare pentru upload fișiere mari (Modpack-urile pot fi mari)
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+app:
+  storage:
+    root-path: storage/modpacks
