@@ -30,7 +30,7 @@ public class ModpackManagementController {
             @RequestBody ModpackCreateRequestDTO dto,
             @RequestHeader(value = "X-Owner-Token") String ownerToken) {
 
-        if (modpackService.validateOwner(ownerToken)) {
+        if (!modpackService.validateOwner(ownerToken)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Trebuie să te înregistrezi mai întâi (/register)");
         }
 

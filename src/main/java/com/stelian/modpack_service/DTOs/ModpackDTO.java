@@ -37,14 +37,19 @@ public class ModpackDTO {
     }
 
     private static ModpackDTO.ModpackDTOBuilder baseBuilder(Modpack modpack) {
-        return ModpackDTO.builder()
+        var builder = ModpackDTO.builder()
                 .id(modpack.getId())
                 .name(modpack.getName())
                 .owner(UserDTO.from(modpack.getOwner()))
                 .gameVersion(modpack.getGameVersion())
                 .loader(modpack.getLoader())
-                .loaderVersion(modpack.getLoaderVersion())
-                .latestVersion(ModpackVersionDTO.from(modpack.getLatestVersion()))
-                .shareCode(modpack.getSharingCode());
+                .shareCode(modpack.getSharingCode())
+                .loaderVersion(modpack.getLoaderVersion());
+
+        if (modpack.getLatestVersion() != null) {
+            builder.latestVersion(ModpackVersionDTO.from(modpack.getLatestVersion()));
+        }
+
+        return builder;
     }
 }
