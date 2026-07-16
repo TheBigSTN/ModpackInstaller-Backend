@@ -18,6 +18,7 @@ import java.util.UUID;
 @Builder
 public class User {
     @Id
+    @GeneratedValue
     private UUID id;
 
     @Column(unique = true)
