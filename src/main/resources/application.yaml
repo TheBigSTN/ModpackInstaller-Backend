@@ -31,4 +31,4 @@ spring:
 
 app:
   storage:
-    root-path: storage/modpacks
+    root-path: storage

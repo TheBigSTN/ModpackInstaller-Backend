@@ -1,7 +1,8 @@
 package com.stelian.modpack_service.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference; // Import JsonManagedReference
+import com.stelian.modpack_service.DTOs.VersionStatus; // Import the new enum
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +22,11 @@ public class ModpackVersion {
     @GeneratedValue(strategy = GenerationType.AUTO) // PostgreSQL suportă nativ UUID
     private UUID id;
 
-    private int versionNumber;
-    private String zipPath;
-    private String patchPath;
+    private String semver; // Changed from int versionNumber to String semver
+    private String versionName; // New field for a human-readable version name
+
+    @Enumerated(EnumType.STRING) // Store enum as String
+    private VersionStatus status; // New field for version status
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -32,6 +35,11 @@ public class ModpackVersion {
     @JoinColumn(name = "modpack_id")
     @JsonBackReference
     private Modpack modpack;
+
+    @OneToMany(mappedBy = "modpackVersion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    @JsonManagedReference
+    private List<ModpackVersionFile> files = new ArrayList<>(); // New field for files
 
     @PrePersist
     protected void onCreate() {

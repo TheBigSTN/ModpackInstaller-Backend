@@ -7,19 +7,23 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
-@Table(name = "modpack_owners")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ModpackOwner {
+public class User {
     @Id
-    private String ownerToken; // Token-ul generat (ex: usr_abcd123)
+    private UUID id;
 
-    private String nickname;
+    @Column(unique = true)
+    private String token;
+
+    private String username;
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)

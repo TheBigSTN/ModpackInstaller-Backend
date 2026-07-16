@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.UUID; // Import UUID
 
 @Data
 @Builder
@@ -19,7 +20,8 @@ public class PublicModpackResponseDTO {
     private String gameVersion;
     private ModLoaderType loader;
     private String loaderVersion;
-    private int latestVersion;
+    private String latestVersion;
+    private UUID latestVersionId; // New field for the UUID of the latest version
     private Instant createdAt;
     private Instant modifiedAt;
 }
